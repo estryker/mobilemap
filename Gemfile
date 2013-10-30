@@ -18,9 +18,15 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'jquery-rails'
+  gem 'jquery_mobile_rails'
 end
 
-gem 'jquery-rails'
+#gem 'jquery-rails'
+#gem 'jquery-mobile-rails'
+
+# TODO: may have to restrict versions:
+# gem 'jquery-rails', '=2.0.1' 
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

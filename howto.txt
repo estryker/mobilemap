@@ -1,2 +1,169 @@
-rails new mobilemap
+Header
+  Intro
+
+text
+  This is how to get started with Rails 3.2 and jquery Mobile. 
+
+  We start by generating a new app, removing the static index page and generating our only controller
+
+$ 
+  rails new mobilemap
+  cd mobilemap
+  git init . 
+  git add .
+  git commit -a -m "initial commit"
+  rm public/index.html
+  rails generate controller map
+
+comment_box
+  Our application will have a regular HTML layout and a mobile HTML layout
+
+comment_box
+  Note that with the Rails asset pipeline, we don't want to use <script> tags in our erb files
+
+question
+  Should we use a CDN? If not, where should we put the .js and .css files?
+
+text
+  Now we can start adding in the jquery-mobile goodness.  We update our Gemfile, then use Bundler 
+  to install.
+
+comment_box
+  Note that Rails 3.1 includes the jquery-rails gem by default. There is no need to use
+  the rails script to pull down any of our jquery js or css files into our assets directory. 
+
+edit
+  Gemfile
+      group :assets do
+        gem 'sass-rails',   '~> 3.2.3'
+        gem 'coffee-rails', '~> 3.2.1'
+      
+        # See https://github.com/sstephenson/execjs#readme for more supported runtimes
+        # gem 'therubyracer', :platforms => :ruby
+      
+        gem 'uglifier', '>= 1.0.3'
+        gem 'jquery-rails'
+        gem 'jquery_mobile_rails'
+      end 
+
+$ bundle install
+
+text
+  To make sure the javascript files from jquery mobile are used, we need to add this directive
+
+edit
+  application.js
+    //= require jquery.mobile
+
+text
+  Now we can create our two html pages, one for desktop browsers and one for our mobile browsers. 
+
+edit
+  views/layouts/application.html.erb
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Mobilemap</title> 
+        <%= stylesheet_link_tag    "application" %>
+        <%= javascript_include_tag "application" %> 
+        <%= csrf_meta_tags %>
+       </head>
+      <body>  
+        <p>
+          <%= link_to "Mobile Site", :mobile => 1 %>
+        </p>
+      <%= yield %>
+      
+      </body>
+      </html>
+
+  views/layouts/application.mobile.erb
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>MobileMap</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <%= stylesheet_link_tag    "application" %>
+        <%= javascript_include_tag "application" %> 
+        <%= csrf_meta_tags %>
+      </head>  
+       
+      <body>
+      
+        <div data-role="page"> 
+      
+          <div data-role="header"> 
+            <h1> MobileMap</h1> 
+          </div> 
+          <div data-role="content">
+            <%= yield %>  
+            <p>
+      	<%= link_to "Full Site", :mobile => 0 %>
+            </p>
+          </div> 
+        </div> 
+      </body>
+      
+      </html>
+
+text
+  Now comes some tricky stuff.  We want to use the UserAgent to determine which view to see, but 
+  also allow desktop browsers to view the mobile site and vice versa. We start by adding a 'mobile'
+  mime type to allow for things like 'respond_to' to have another format to handle.  In our case
+  we are using default routing to have the correct page to be rendered.  We do this by making 
+  the request.format be set to :mobile.  When a mobile browser  first comes to the site, it will 
+  have 'Mobile' in its user agent, which will change the request.format, and therefore the 
+  application.mobile.erb page will be rendered. 
+
+edit
+  config/initializers/mime_types.rb
+      Mime::Type.register_alias "text/html", :mobile
+
+  application_controller.rb
+    before_filter :prepare_for_mobile
+
+    private
+
+    def mobile_device?
+      if session[:mobile_param]
+        session[:mobile_param] == "1"
+      else
+	request.user_agent =~ /Mobile|webOS/
+      end
+   end
+   helper_method :mobile_device?
+   def prepare_for_mobile
+     session[:mobile_param] = params[:mobile] if params[:mobile]
+     request.format = :mobile if mobile_device?
+   end
+
+text
+  We no need to make the actual content
+
+edit
+  root.html.erb
+    Hello. HTML.
+
+  root.mobile.erb
+    Hello. Mobile
+
+text 
+  We need a controller method to handle our request
+
+edit
+  app/controllers/map_controller.rb
+    def root
+
+    end
+
+text
+  And finally, we change the routes.rb file to have our controller method be invoked
+
+edit
+  routes.rb
+    root :to => 'map#root'
+
+reference
+  https://github.com/tscolari/jquery-mobile-rails/blob/master/test/dummy/app/views/layouts/application.html.erb
+  http://railscasts.com/episodes/199-mobile-devices
 

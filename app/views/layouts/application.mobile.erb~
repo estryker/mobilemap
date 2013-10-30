@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mobilemap</title>
+      <%= stylesheet_link_tag "application" %> 
+      <%= javascript_include_tag "application" %> 
+      <script src="$CDN/jquery.mobile.css"></script> 
+      <script src="$CDN/jquery.mobile.js"></script>
+</head>
+<body>
+
+<%= yield %>
+
+</body>
+</html>
