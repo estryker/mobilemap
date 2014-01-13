@@ -1,6 +1,6 @@
 <div id="details" data-role="page" class="details-page">
   <div data-role="header" data-position="fixed"> 
-    <a href="#about" data-role="button" rel="internal" data-ajax='false' >About</a>
+    <%= link_to "About", about_path, {'data-role' => "button", 'data-icon' => "info", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %>  
     <h1> MobileMap</h1> 
     <%= link_to "Settings", settings_path, {'data-role' => "button", 'data-icon' => "gear", "rel" => "external"} %>  
   </div> 
@@ -28,7 +28,7 @@
         }); 
       </script>
     </div>
-    
+o    
   </div>
 
 
@@ -38,7 +38,7 @@
 	<ul> 
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
-	  <li><a href="#" data-role="button" data-icon="plus" data-iconpos="top"> Add Marker </a> </li>
+	  <li><a href="#" data-role="button" data-icon="plus" data-iconpos="top"> Add </a> </li>
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
 	</ul>
@@ -48,11 +48,3 @@
 
 </div> 
 
-<div data-role="page" id="about"  data-add-back-btn="true" data-back-btn-txt='Back' data-back-btn-theme='e'>
-  <div data-role="header" data-position="fixed"> 
-    <h1> About Mobile Map </h1>
-  </div>  
-  <div data-role="content" id="map_content" data-theme="a">
-    A test application for JQuery Mobile riding on Rails. 
-  </div>
-</div>

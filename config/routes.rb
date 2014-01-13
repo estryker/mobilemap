@@ -52,6 +52,7 @@ Mobilemap::Application.routes.draw do
 
   match 'settings' => 'settings#show'
   match 'settings/edit' => 'settings#edit'
+  match 'about' => 'map#about'
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
