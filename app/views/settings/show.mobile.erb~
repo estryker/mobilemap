@@ -1,0 +1,10 @@
+ <div id="details" data-role="page" class="details-page">
+    <div data-role="header" data-position="fixed"> 
+    <a href="#settings" data-role="button">Back</a>
+      <h1> Settings</h1> 
+      <a href="#settings" data-role="button" data-icon="gear">Settings</a>
+    </div> 
+    
+   <div data-role="content" id="map_content" data-theme="a">
+   </div>
+</div>

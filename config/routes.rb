@@ -50,6 +50,8 @@ Mobilemap::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'map#root'
 
+  match 'settings' => 'settings#show'
+  match 'settings/edit' => 'settings#edit'
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.
