@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mobilemap</title> 
+  <title>MobileMap</title> 
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %> 
   <%= csrf_meta_tags %>
- </head>
-<body>  
-  <p>
-    <%= link_to "Mobile Site", :mobile => 1 %>
-  </p>
-<%= yield %>
-
+ <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript" ></script> 
+ <script type="text/javascript" src="http://jquery-ui-map.googlecode.com/svn/trunk/ui/min/jquery.ui.map.full.min.js"></script>
+ <script type="text/javascript" src="http://jquery-ui-map.googlecode.com/svn/trunk/ui/jquery.ui.map.extensions.js"></script> 
+  
+ </head>  
+ 
+<body>
+  <%= yield %> 
+  
+  
 </body>
+
 </html>
+<!-- <p>
+     <%= link_to "Full Site", :mobile => 0 %>
+     </p> -->
