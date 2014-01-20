@@ -64,3 +64,11 @@ function initialize() {
     // $('#map_canvas').gmap({'center': marker});
 };
 
+function track_position(sleep) {
+    sleep = typeof sleep !== 'undefined' ? sleep : 5;
+    if(sleep > 0) {
+	navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, geolocation_options);
+	setTimeout(track_position(sleep), sleep); 
+    }
+}
+
