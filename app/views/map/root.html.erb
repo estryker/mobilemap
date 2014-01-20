@@ -11,18 +11,10 @@
       
       <script type="text/javascript">
 	
-        function initialize() {
-        setupMap(39.3, -76.616, 11, true);
-        var eventLatlng = new google.maps.LatLng(39.3, -76.616);
-        var marker = createEventMarker(eventLatlng);
-        marker.setAnimation(google.maps.Animation.DROP);
-        $('#map_canvas').gmap({'center': marker});
-
-        }
-
+   
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
         $('.details-page').on("pageshow", function() {
-        if (map == null) {
+        if (map == null || user_coordinates == null) {
         initialize();
         }
         }); 
@@ -38,7 +30,7 @@ o
 	<ul> 
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
-	  <li><a href="#" data-role="button" data-icon="plus" data-iconpos="top"> Add </a> </li>
+	  <li><a href="#" data-role="button" data-icon="plus" data-iconpos="top"> Add </a> &nbsp </li>
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
 	</ul>
