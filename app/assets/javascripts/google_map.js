@@ -65,7 +65,7 @@ function initialize() {
 };
 
 function track_position(sleep) {
-    sleep = typeof sleep !== 'undefined' ? sleep : 5;
+    sleep = typeof sleep !== 'undefined' ? sleep : 15000;
     if(sleep > 0) {
 	navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, geolocation_options);
 	setTimeout(track_position(sleep), sleep); 
