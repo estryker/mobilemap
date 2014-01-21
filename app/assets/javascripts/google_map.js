@@ -5,9 +5,6 @@
 var map;
 var user_coordinates; 
 
-function createEventMarker(eventLatlng) {
-    return new google.maps.Marker({position: eventLatlng, map: map});
-}
 
 function setupMap(lat, lng, mapZoom, showOverviewControl) {
     var mapLatlng = new google.maps.LatLng(lat, lng);
@@ -51,6 +48,21 @@ function geolocation_error(err) {
   console.warn('ERROR(' + err.code + '): ' + err.message); 
 };
 
+function createEventMarker(eventLatlng) {
+    return new google.maps.Marker({position: eventLatlng, map: map});
+}
+
+function add_marker(lat,lng) {
+    var latlng = new google.maps.LatLng(lat,lng);
+    add_marker_latlng(latlng);
+}
+
+function add_marker_latlng(latlng) {
+    var marker = createEventMarker(latlng);
+    marker.setAnimation(google.maps.Animation.DROP);
+    $('#map_canvas').gmap({'center': marker});
+}
+
 function initialize() {
     // need a good default location ...
     setupMap(39.3, -76.616, 13, true);
@@ -63,7 +75,7 @@ function initialize() {
     //marker.setAnimation(google.maps.Animation.DROP);
     // $('#map_canvas').gmap({'center': marker});
 };
-
+/* not working as expected right now */
 function track_position(sleep) {
     sleep = typeof sleep !== 'undefined' ? sleep : 15000;
     if(sleep > 0) {
@@ -72,3 +84,51 @@ function track_position(sleep) {
     }
 }
 
+//var center = map.getCenter();
+// TODO: only get markers if above zoom level 7 (or so)
+//var zoom = getZoom();
+
+/* to do an HTTP get using jQuery
+$.get(
+    "somepage.php",
+    {paramOne : 1, paramX : 'abc'},
+    receive_json_markers(data)
+    );
+*/
+
+function receive_json_markers(data) {
+    for ( i = 0; i < data.length; i++ ) {
+	var latlng = new google.maps.LatLng(data[ i ].lat, data[ i ].long);
+	var marker = new google.maps.Marker({
+            map: map,
+            icon: 'http://mobilemap.herokuapp.com/green_map_marker.jpg',
+            position: latlng,
+            title: data[ i ].text,
+            html: '<div class="info-window">' + data[i].text + '</div>'
+	});
+	google.maps.event.addListener(marker, 'click', function() {
+            infowindow.setContent(this.html);
+            infowindow.setOptions({maxWidth: 800});
+            infowindow.open(map, this);
+	});
+    }
+}
+
+/* call the REST API to get all the markers in view */
+function obtain_markers(wait,max) {
+   window.setTimeout(function() {
+       center = map.getCenter();
+      $.get(
+	  'http://localhost:3000/events',
+	  {center_latitude : center.latitude, center_longitude : center.longitude, num_events : 5000, box_size : 2},
+	  receive_json_markers(data)
+      );// http get to the REST server's API
+   }, wait);
+}
+// call this on the main page to not be confused with any other maps  
+// google.maps.event.addListener(map, 'center_changed',obtain_markers(1000));
+
+// TODO: on the 'create new' page, we should put a cross hairs marker, and
+// we should get it's position when the 'form' is submitted. 
+
+//"http://mobilemap.herokuapp.com/events",

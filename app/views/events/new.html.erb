@@ -1,0 +1,10 @@
+<div id="details" data-role="page" class="details-page">
+  <div data-role="header" data-position="fixed"> 
+    <%= link_to 'MobileMap', root_path, 'data-icon' => 'back', 'data-ajax' => false %>
+    <h1>New event</h1>
+  </div>
+  <div data-role="content" id="map_content" data-theme="a">
+    <%= render 'form' %>
+  </div>
+
+</div>

@@ -10,13 +10,17 @@
     <div id="map_canvas" > 
       
       <script type="text/javascript">
-	
+	/*
+         
+        */
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
         $('.details-page').on("pageshow", function() {
         if (map == null || user_coordinates == null) {
         initialize();
         }
         }); 
+	obtain_markers(0,5000);
+	google.maps.event.addListener(map, 'center_changed',obtain_markers(1000,5000));
        // track_position();
       </script>
     </div>
@@ -30,7 +34,9 @@ o
 	<ul> 
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
-	  <li><a href="#" data-role="button" data-icon="plus" data-iconpos="top"> Add </a> &nbsp </li>
+	    <li>
+	      <%= link_to "Add", new_event_path, {'data-role' => "button", 'data-icon' => "plus", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %> 
+	    </li>
 	  <li>&nbsp</li>
 	  <li>&nbsp</li>
 	</ul>
