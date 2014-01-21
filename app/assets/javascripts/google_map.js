@@ -43,7 +43,7 @@ function geolocation_success(pos) {
   console.log('Latitude : ' + user_coordinates.latitude);
   console.log('Longitude: ' + user_coordinates.longitude);
   console.log('More or less ' + user_coordinates.accuracy + ' meters.');
-  setupMap(user_coordinates.latitude, user_coordinates.longitude, 9, true);
+  setupMap(user_coordinates.latitude, user_coordinates.longitude, 13, true);
 };
 
 function geolocation_error(err) {
@@ -53,7 +53,7 @@ function geolocation_error(err) {
 
 function initialize() {
     // need a good default location ...
-    setupMap(39.3, -76.616, 11, true);
+    setupMap(39.3, -76.616, 13, true);
 
     // non-blocking, so we set up the map first, then we will move
     // to this location if/when we get a position
