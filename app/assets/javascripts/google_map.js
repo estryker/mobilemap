@@ -119,7 +119,7 @@ function obtain_markers(wait,max) {
    window.setTimeout(function() {
        center = map.getCenter();
       $.get(
-	  'http://localhost:3000/events',
+	  'http://mobilemap.herokuapp.com/events',
 	  {center_latitude : center.latitude, center_longitude : center.longitude, num_events : 5000, box_size : 2},
 	  receive_json_markers(data)
       );// http get to the REST server's API
