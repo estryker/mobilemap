@@ -106,17 +106,18 @@ function receive_json_markers(data) {
 
     for ( i = 0; i < data.length; i++ ) {
 	var latlng = new google.maps.LatLng(data[ i ].latitude, data[ i ].longitude);
+	var infoWindow = new google.maps.InfoWindow();
 	var marker = new google.maps.Marker({
             map: map,
             icon: 'http://mobilemap.herokuapp.com/assets/green_marker_32.png',
             position: latlng,
             title: data[ i ].text,
-            html: '<div class="info-window">' + data[i].text + '</div>'
+            html: '<div class="info-window"> ' + data[i].text + ' </div>'
 	});
 	google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(this.html);
-            infowindow.setOptions({maxWidth: 800});
-            infowindow.open(map, this);
+            infoWindow.setContent(this.html);
+            infoWindow.setOptions({maxWidth: 800});
+            infoWindow.open(map, this);
 	});
     }
 }
