@@ -115,7 +115,7 @@ function receive_json_markers(data) {
             html: '<div class="info-window"> ' + data[i].text + ' </div>'
 	});
 	google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent(this.html);
+            infoWindow.setContent(data[i].text); //this.html
             infoWindow.setOptions({maxWidth: 800});
             infoWindow.open(map, this);
 	});
@@ -128,8 +128,8 @@ function obtain_markers(wait,max) {
        center = map.getCenter();
        console.log('Map center: ' + center);
       $.get(
-	  //'http://mobilemap.herokuapp.com/events.json',
-          'http://localhost:3000/events.json',
+	  'http://mobilemap.herokuapp.com/events.json',
+          //'http://localhost:3000/events.json',
 	  {center_latitude : center.latitude, center_longitude : center.longitude, num_events : 5000, box_size : 2},
 	  function(data) { receive_json_markers(data); }
       );// http get to the REST server's API
