@@ -16,8 +16,7 @@
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
         $('.details-page').on("pageshow", function() {
           if (map == null || user_coordinates == null) {
-	    // non-blocking, so we set up the map first, then we will move
-	    // to this location if/when we get a position
+            // geolocation_success_add_markers will put the markers on the page
 	    navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
           }
         }); 
