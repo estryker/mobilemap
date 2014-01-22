@@ -5,7 +5,6 @@
 var map;
 var user_coordinates; 
 
-
 function setupMap(lat, lng, mapZoom, showOverviewControl) {
     var mapLatlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
@@ -45,7 +44,6 @@ function geolocation_success(pos) {
 
 function geolocation_success_add_markers(pos) {
   geolocation_success(pos);
-  obtain_markers(0,5000);
   google.maps.event.addListener(map, 'center_changed',obtain_markers(1000,5000));
 };
 
@@ -104,11 +102,13 @@ $.get(
 */
 
 function receive_json_markers(data) {
+    console.log('Data length: ' + data.length);
+
     for ( i = 0; i < data.length; i++ ) {
-	var latlng = new google.maps.LatLng(data[ i ].lat, data[ i ].long);
+	var latlng = new google.maps.LatLng(data[ i ].latitude, data[ i ].longitude);
 	var marker = new google.maps.Marker({
             map: map,
-            icon: 'http://mobilemap.herokuapp.com/green_map_marker.jpg',
+            icon: 'http://mobilemap.herokuapp.com/assets/green_marker_32.png',
             position: latlng,
             title: data[ i ].text,
             html: '<div class="info-window">' + data[i].text + '</div>'
@@ -125,10 +125,12 @@ function receive_json_markers(data) {
 function obtain_markers(wait,max) {
    window.setTimeout(function() {
        center = map.getCenter();
+       console.log('Map center: ' + center);
       $.get(
-	  'http://mobilemap.herokuapp.com/events.json',
+	  //'http://mobilemap.herokuapp.com/events.json',
+          'http://localhost:3000/events.json',
 	  {center_latitude : center.latitude, center_longitude : center.longitude, num_events : 5000, box_size : 2},
-	  receive_json_markers(data)
+	  function(data) { receive_json_markers(data); }
       );// http get to the REST server's API
    }, wait);
 }
