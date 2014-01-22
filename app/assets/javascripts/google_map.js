@@ -43,6 +43,12 @@ function geolocation_success(pos) {
   setupMap(user_coordinates.latitude, user_coordinates.longitude, 13, true);
 };
 
+function geolocation_success_add_markers(pos) {
+  geolocation_success(pos);
+  obtain_markers(0,5000);
+  google.maps.event.addListener(map, 'center_changed',obtain_markers(1000,5000));
+};
+
 function geolocation_error(err) {
   user_coordinates = new google.maps.LatLng(39.3, -76.616);
   console.warn('ERROR(' + err.code + '): ' + err.message); 
@@ -74,6 +80,7 @@ function initialize() {
     // var marker = createEventMarker(eventLatlng);
     //marker.setAnimation(google.maps.Animation.DROP);
     // $('#map_canvas').gmap({'center': marker});
+    //obtain_markers(0,5000);
 };
 /* not working as expected right now */
 function track_position(sleep) {
