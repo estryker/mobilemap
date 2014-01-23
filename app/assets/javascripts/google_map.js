@@ -33,21 +33,29 @@ var geolocation_options = {
 };
 
 function geolocation_success(pos) {
-  user_coordinates = pos.coords;
-
-  console.log('Your current position is:');
-  console.log('Latitude : ' + user_coordinates.latitude);
-  console.log('Longitude: ' + user_coordinates.longitude);
-  console.log('More or less ' + user_coordinates.accuracy + ' meters.');
-  setupMap(user_coordinates.latitude, user_coordinates.longitude, 13, true);
+    console.log('geo success!');
+    user_coordinates = pos.coords;
+    
+    console.log('Your current position is:');
+    console.log('Latitude : ' + user_coordinates.latitude);
+    console.log('Longitude: ' + user_coordinates.longitude);
+    console.log('More or less ' + user_coordinates.accuracy + ' meters.');
+    setupMap(user_coordinates.latitude, user_coordinates.longitude, 13, true);
+    
+    console.log('Obtaining initial markers');
+    
+    obtain_markers(5000);
 };
 
 function geolocation_success_add_markers(pos) {
+
     geolocation_success(pos);
+    console.log('adding listener for markers');
     // this will get the markers right away and 1 second after the center is changed
     google.maps.event.addListener(map, 'center_changed',
 				  function() {	
-				      window.setTimeout(function() { obtain_markers(5000);  }, wait);
+				      console.log('Center changed');
+				      window.setTimeout(function() { console.log('Obtaining markers'); obtain_markers(5000);  }, 1000);
 				  }); 
 };
 
@@ -142,7 +150,7 @@ function obtain_markers(max) {
 var track = setInterval(function(){find_position; },15000);
 
 function find_position() {
-    navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, geolocation_options);
+    navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
 }
 
 function stop_tracking()
