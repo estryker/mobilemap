@@ -43,8 +43,12 @@ function geolocation_success(pos) {
 };
 
 function geolocation_success_add_markers(pos) {
-  geolocation_success(pos);
-  google.maps.event.addListener(map, 'center_changed',obtain_markers(1000,5000));
+    geolocation_success(pos);
+    // this will get the markers right away and 1 second after the center is changed
+    google.maps.event.addListener(map, 'center_changed',
+				  function() {	
+				      window.setTimeout(function() { obtain_markers(5000);  }, wait);
+				  }); 
 };
 
 function geolocation_error(err) {
@@ -78,7 +82,7 @@ function initialize() {
     // var marker = createEventMarker(eventLatlng);
     //marker.setAnimation(google.maps.Animation.DROP);
     // $('#map_canvas').gmap({'center': marker});
-    //obtain_markers(0,5000);
+    //obtain_markers(5000);
 };
 
 //var center = map.getCenter();
@@ -113,20 +117,18 @@ function receive_json_markers(data) {
 	});*/
     }
 }
-
-/* call the REST API to get all the markers in view */
-function obtain_markers(wait,max) {
-   window.setTimeout(function() {
-       center = map.getCenter();
-       console.log('Map center: ' + center);
-      $.get(
-	  'http://mobilemap.herokuapp.com/events.json',
-          //'http://localhost:3000/events.json',
-	  {center_latitude : center.latitude, center_longitude : center.longitude, num_events : 5000, box_size : 2},
-	  function(data) { receive_json_markers(data); }
-      );// http get to the REST server's API
-   }, wait);
+function obtain_markers(max) {
+    center = map.getCenter();
+    console.log('Map center: ' + center);
+    $.get(
+	'http://mobilemap.herokuapp.com/events.json',
+	//'http://localhost:3000/events.json',
+	{center_latitude : center.latitude, center_longitude : center.longitude, num_events : max, box_size : 2},
+	function(data) { receive_json_markers(data); }
+    );// http get to the REST server's API
 }
+
+
 // call this on the main page to not be confused with any other maps  
 // google.maps.event.addListener(map, 'center_changed',obtain_markers(1000));
 
