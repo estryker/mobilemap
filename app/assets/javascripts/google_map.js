@@ -118,11 +118,11 @@ function receive_json_markers(data) {
             title: data[ i ].text,
             html: '<div class="info-window"> ' + data[ i ].text + ' </div>'
 	});
-	/*google.maps.event.addListener(marker, 'click', function() {
+	google.maps.event.addListener(marker, 'click', function() {
             infoWindow.setContent(data[ i ].text); //this.html
             infoWindow.setOptions({maxWidth: 800});
             infoWindow.open(map, this);
-	});*/
+	});
     }
 }
 function obtain_markers(max) {
