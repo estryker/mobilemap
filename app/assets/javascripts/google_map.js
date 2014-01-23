@@ -119,7 +119,7 @@ function receive_json_markers(data) {
             html: '<div class="info-window"> ' + data[ i ].text + ' </div>'
 	});
 	google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent(data[ i ].text); //this.html
+            infoWindow.setContent(this.html); 
             infoWindow.setOptions({maxWidth: 800});
             infoWindow.open(map, this);
 	});
