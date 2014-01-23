@@ -36,11 +36,18 @@ function geolocation_success(pos) {
     console.log('geo success!');
     user_coordinates = pos.coords;
     
+    // use previous zoom level if there
+    var zoom;
+    if(map == null) {
+      zoom = 13
+    }else {
+      zoom = map.getZoom();
+    }
     console.log('Your current position is:');
     console.log('Latitude : ' + user_coordinates.latitude);
     console.log('Longitude: ' + user_coordinates.longitude);
     console.log('More or less ' + user_coordinates.accuracy + ' meters.');
-    setupMap(user_coordinates.latitude, user_coordinates.longitude, 13, true);
+    setupMap(user_coordinates.latitude, user_coordinates.longitude, zoom, true);
     
     console.log('Obtaining initial markers');
     
@@ -51,11 +58,16 @@ function geolocation_success_add_markers(pos) {
 
     geolocation_success(pos);
     console.log('adding listener for markers');
-    // this will get the markers right away and 1 second after the center is changed
+    var marker_timeout;
+    // this will get the markers 1 second after the center is changed.
+    // If the center is changed in succession quickly, then the previous
+    // timeout will be cleared to avoid too much network traffic (this actually works!!)
+    // TODO: only obtain the markers if new ones might be in view and not in the prev request
     google.maps.event.addListener(map, 'center_changed',
 				  function() {	
 				      console.log('Center changed');
-				      window.setTimeout(function() { console.log('Obtaining markers'); obtain_markers(5000);  }, 1000);
+				      clearTimeout(marker_timeout);
+				      marker_timeout = window.setTimeout(function() { console.log('Obtaining markers'); obtain_markers(5000);  }, 1000);
 				  }); 
 };
 
@@ -120,7 +132,7 @@ function receive_json_markers(data) {
 	});
 	google.maps.event.addListener(marker, 'click', function() {
             infoWindow.setContent(this.html); 
-            infoWindow.setOptions({maxWidth: 800});
+            infoWindow.setOptions({maxWidth: 1600});
             infoWindow.open(map, this);
 	});
     }
