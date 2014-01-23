@@ -17,7 +17,8 @@
         $('.details-page').on("pageshow", function() {
           if (map == null || user_coordinates == null) {
             // geolocation_success_add_markers will put the markers on the page
-	    navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
+	    //navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
+	    find_position();
           }
         }); 
 

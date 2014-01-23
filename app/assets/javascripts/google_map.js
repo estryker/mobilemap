@@ -80,14 +80,6 @@ function initialize() {
     // $('#map_canvas').gmap({'center': marker});
     //obtain_markers(0,5000);
 };
-/* not working as expected right now */
-function track_position(sleep) {
-    sleep = typeof sleep !== 'undefined' ? sleep : 15000;
-    if(sleep > 0) {
-	navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, geolocation_options);
-	setTimeout(track_position(sleep), sleep); 
-    }
-}
 
 //var center = map.getCenter();
 // TODO: only get markers if above zoom level 7 (or so)
@@ -112,13 +104,13 @@ function receive_json_markers(data) {
             icon: 'http://mobilemap.herokuapp.com/assets/green_marker_32.png',
             position: latlng,
             title: data[ i ].text,
-            html: '<div class="info-window"> ' + data[i].text + ' </div>'
+            html: '<div class="info-window"> ' + data[ i ].text + ' </div>'
 	});
-	google.maps.event.addListener(marker, 'click', function() {
-            infoWindow.setContent(data[i].text); //this.html
+	/*google.maps.event.addListener(marker, 'click', function() {
+            infoWindow.setContent(data[ i ].text); //this.html
             infoWindow.setOptions({maxWidth: 800});
             infoWindow.open(map, this);
-	});
+	});*/
     }
 }
 
@@ -142,3 +134,16 @@ function obtain_markers(wait,max) {
 // we should get it's position when the 'form' is submitted. 
 
 //"http://mobilemap.herokuapp.com/events",
+//
+
+
+var track = setInterval(function(){find_position; },15000);
+
+function find_position() {
+    navigator.geolocation.getCurrentPosition(geolocation_success, geolocation_error, geolocation_options);
+}
+
+function stop_tracking()
+{
+  clearInterval(track);
+}
