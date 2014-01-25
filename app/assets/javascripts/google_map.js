@@ -31,6 +31,26 @@ var geolocation_options = {
   timeout: 15000,
   maximumAge: 0
 };
+// TODO: better organize code for geolocation success
+function geolocation_success_newmap(pos) {
+    console.log('geo success!');
+    user_coordinates = pos.coords;
+    
+    // use previous zoom level if there
+    var zoom;
+    if(map == null) {
+      zoom = 13
+    }else {
+      zoom = map.getZoom();
+    }
+    console.log('Your current position is:');
+    console.log('Latitude : ' + user_coordinates.latitude);
+    console.log('Longitude: ' + user_coordinates.longitude);
+    console.log('More or less ' + user_coordinates.accuracy + ' meters.');
+    setupNewMap(user_coordinates.latitude, user_coordinates.longitude, zoom, true);
+};
+
+
 
 function geolocation_success(pos) {
     console.log('geo success!');
@@ -59,13 +79,13 @@ function geolocation_success_add_markers(pos) {
     geolocation_success(pos);
     console.log('adding listener for markers');
     var marker_timeout;
-    // this will get the markers 1 second after the center is changed.
+    // this will get the markers 1 second after the bounds are changed.
     // If the center is changed in succession quickly, then the previous
     // timeout will be cleared to avoid too much network traffic (this actually works!!)
     // TODO: only obtain the markers if new ones might be in view and not in the prev request
-    google.maps.event.addListener(map, 'center_changed',
+    google.maps.event.addListener(map, 'bounds_changed',
 				  function() {	
-				      console.log('Center changed');
+				      console.log('Bounds changed');
 				      clearTimeout(marker_timeout);
 				      marker_timeout = window.setTimeout(function() { console.log('Obtaining markers'); obtain_markers(5000);  }, 1000);
 				  }); 
@@ -116,7 +136,7 @@ $.get(
     receive_json_markers(data)
     );
 */
-
+// 'http://mobilemap.herokuapp.com
 function receive_json_markers(data) {
     console.log('Data length: ' + data.length);
 
@@ -125,7 +145,7 @@ function receive_json_markers(data) {
 	var infoWindow = new google.maps.InfoWindow();
 	var marker = new google.maps.Marker({
             map: map,
-            icon: 'http://mobilemap.herokuapp.com/assets/green_marker_32.png',
+            icon: '/assets/green_marker_32.png',
             position: latlng,
             title: data[ i ].text,
             html: '<div class="info-window"> ' + data[ i ].text + ' </div>'
@@ -168,4 +188,51 @@ function find_position() {
 function stop_tracking()
 {
   clearInterval(track);
+}
+
+var new_map;
+var reticleImage;
+var reticleMarker;
+function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
+    var mapLatlng = new google.maps.LatLng(lat, lng);
+    var myOptions = {
+        zoom: mapZoom,
+        center: mapLatlng,
+        overviewMapControl: showOverviewControl,
+        zoomControl: true,
+        zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL,
+            position: google.maps.ControlPosition.LEFT_TOP
+
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    new_map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    // 'http://mobilemap.herokuapp.com/assets/
+    reticleImage = new google.maps.MarkerImage(
+	'/assets/reticle.png',            // marker image
+	new google.maps.Size(63, 63),    // marker size
+	new google.maps.Point(0,0),      // marker origin
+	new google.maps.Point(32, 32));  // marker anchor point
+    var reticleShape = {
+	coords: [32,32,32,32],           // 1px
+	type: 'rect'                     // rectangle
+    };
+
+    reticleMarker = new google.maps.Marker({
+	position: mapLatlng,
+	map: new_map,
+	icon: reticleImage, 
+	shape: reticleShape,
+	optimized: false,
+	zIndex: 5
+    });   
+
+    google.maps.event.addListener(new_map, 'bounds_changed', centerReticle);
+}
+
+function centerReticle(){
+    console.log('centering reticle');
+    reticleMarker.setPosition(new_map.getCenter());
 }

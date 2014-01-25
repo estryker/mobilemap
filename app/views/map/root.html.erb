@@ -39,10 +39,10 @@ o
 	    </li>
 	  <li>
 	    <div  data-role="button" >
-	      <button onclick="find_position()" data-icon="plus" data-iconpos="top">Locate</button>
+	       <%= link_to "Locate", '#', {'data-role' => "button", 'data-icon' => "plus", 'onclick'=>"find_position()"} %>
 	    </div>
 	  </li>
-	  <li>&nbsp</li>
+	  <li><button onclick="find_position()" data-icon="plus" data-iconpos="top">Locate</button></li>
 	</ul>
       </div>
     </div>
