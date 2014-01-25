@@ -223,7 +223,7 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
     reticleMarker = new google.maps.Marker({
 	position: mapLatlng,
 	map: new_map,
-	icon: reticleImage, 
+	icon: '/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
 	shape: reticleShape,
 	optimized: false,
 	zIndex: 5

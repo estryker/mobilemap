@@ -25,7 +25,16 @@
    </div>
   <div data-role="content" id="map_content" data-theme="a">
     <!-- populate form with the map center.  update the numbers on center_changed event -->
-    <%= render 'form' %>
+    <!-- <%= render 'form' %> -->
+    <%= form_for @event do |f| %>
+       <%= f.label :latitude %><br>
+       <%= f.text_field :latitude %>
+       <%= f.label :longitude %><br>
+       <%= f.text_field :longitude %>
+       <%= f.label :text %><br>
+       <%= f.text_field :text %>
+       <%= f.submit %>
+    <% end %>
   </div>
 
 </div>
