@@ -4,7 +4,7 @@
     <h1>New event</h1>
   </div> 
   <div data-role="content" id="map_content" data-theme="a">
-    <div id="map_canvas" > 
+    <div id="map_canvas" style="height : 50%"> 
       <script type="text/javascript">
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
         $('.details-page').on("pageshow", function() {
@@ -22,19 +22,19 @@
         }); 
       </script>
     </div>
-   </div>
-  <div data-role="content" id="map_content" data-theme="a">
+   
+  <div data-role="content" id="map_form" data-theme="a">
     <!-- populate form with the map center.  update the numbers on center_changed event -->
     <!-- <%= render 'form' %> -->
     <%= form_for @event do |f| %>
-       <%= f.label :latitude %><br>
-       <%= f.text_field :latitude %>
-       <%= f.label :longitude %><br>
-       <%= f.text_field :longitude %>
+      <!-- <%= f.label :latitude %><br> -->
+       <%= f.hidden_field :latitude %>
+      <!-- <%= f.label :longitude %><br> -->
+       <%= f.hidden_field :longitude  %>
        <%= f.label :text %><br>
        <%= f.text_field :text %>
        <%= f.submit %>
     <% end %>
   </div>
-
+</div>
 </div>

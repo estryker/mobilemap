@@ -230,9 +230,16 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
     });   
 
     google.maps.event.addListener(new_map, 'bounds_changed', centerReticle);
+
+    // If we wanted better cohesion
+    //google.maps.event.addListener(new_map, 'bounds_changed', populateCenterVariable);
 }
 
+// var newmap_center;
 function centerReticle(){
     console.log('centering reticle');
-    reticleMarker.setPosition(new_map.getCenter());
+    var newmap_center = new_map.getCenter();
+    reticleMarker.setPosition(newmap_center);
+    document.getElementById("event_latitude").value = newmap_center.lat();
+    document.getElementById("event_longitude").value = newmap_center.lng();
 }

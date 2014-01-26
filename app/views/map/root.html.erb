@@ -38,11 +38,13 @@ o
 	      <%= link_to "Add", new_event_path, {'data-role' => "button", 'data-icon' => "plus", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %> 
 	    </li>
 	  <li>
+	    <button onclick="find_position()" data-icon="plus" data-iconpos="top">Locate</button>
+	  </li>
+	  <li>
 	    <div  data-role="button" >
 	       <%= link_to "Locate", '#', {'data-role' => "button", 'data-icon' => "plus", 'onclick'=>"find_position()"} %>
 	    </div>
 	  </li>
-	  <li><button onclick="find_position()" data-icon="plus" data-iconpos="top">Locate</button></li>
 	</ul>
       </div>
     </div>
