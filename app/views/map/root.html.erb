@@ -1,4 +1,4 @@
-<div id="details" data-role="page" class="details-page">
+<div id="details" data-role="page" class="details-page" data-theme="b">
   <div data-role="header" data-position="fixed"> 
     <%= link_to "About", about_path, {'data-role' => "button", 'data-icon' => "info", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %>  
     <h1> MobileMap</h1> 
@@ -41,9 +41,11 @@ o
 	    <button onclick="find_position()" data-icon="plus" data-iconpos="top">Locate</button>
 	  </li>
 	  <li>
+	    <!--
 	    <div  data-role="button" >
 	       <%= link_to "Locate", '#', {'data-role' => "button", 'data-icon' => "plus", 'onclick'=>"find_position()"} %>
 	    </div>
+             -->
 	  </li>
 	</ul>
       </div>

@@ -1,4 +1,4 @@
-<div id="details" data-role="page" class="details-page">
+<div id="details" data-role="page" class="details-page" data-theme="b">
   <div data-role="header" data-position="fixed"> 
     <%= link_to 'MobileMap', root_path, 'data-icon' => 'back', 'data-ajax' => false %>
     <h1>New event</h1>
@@ -23,7 +23,7 @@
       </script>
     </div>
    
-  <div data-role="content" id="map_form" data-theme="a">
+  <div data-role="content" id="map_form" data-theme="b" >
     <!-- populate form with the map center.  update the numbers on center_changed event -->
     <!-- <%= render 'form' %> -->
     <%= form_for @event do |f| %>
