@@ -59,7 +59,7 @@ class EventsController < ApplicationController
     @events = sorted_events.first(num_events).sort {|a,b| a.id <=> b.id}.each {|s| s.text.gsub!(/[\n\r]+/,' ')}
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html { redirect_to root_path } # index.html.erb
       format.json { render json: @events }
     end
   end

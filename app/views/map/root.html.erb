@@ -16,12 +16,13 @@
          
         */
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
-        $('.details-page').on("pageshow", function() {
-          if (map == null || user_coordinates == null) {
+        $('.details-page').on("pageshow", function() { 
+	find_position();
+        /*if (map == null || user_coordinates == null) {
             // geolocation_success_add_markers will put the markers on the page
 	    //navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
 	    find_position();
-          }
+          } */
         }); 
 
       </script>
