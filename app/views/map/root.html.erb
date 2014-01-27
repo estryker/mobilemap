@@ -1,8 +1,10 @@
 <div id="details" data-role="page" class="details-page" data-theme="b">
   <div data-role="header" data-position="fixed"> 
-    <%= link_to "About", about_path, {'data-role' => "button", 'data-icon' => "info", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %>  
+<!--    <%= link_to "About", about_path, {'data-role' => "button", 'data-icon' => "info", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %>       -->
+<%= link_to "About", '#about', {'data-role' => "button", 'data-icon' => "info", "data-rel" => "dialog", "data-transition" => "pop"} %>  
     <h1> MobileMap</h1> 
-    <%= link_to "Settings", settings_path, {'data-role' => "button", 'data-icon' => "gear", "rel" => "external"} %>  
+   <!--  <%= link_to "Settings", settings_path, {'data-role' => "button", 'data-icon' => "gear", "rel" => "external"} %>   -->
+<%= link_to "Settings", '#settings', {'data-role' => "button", 'data-icon' => "gear", "data-transition" => "pop"} %>  
   </div> 
   
   <div data-role="content" id="map_content" data-theme="a">
@@ -53,4 +55,23 @@ o
   </div> 
 
 </div> 
+
+<div data-role="page" id="about" data-theme="b" >
+  <div data-role="header" data-position="fixed"> 
+    <h1> About MobileMap </h1>
+  </div>  
+  <div data-role="content" id="map_content" data-theme="a">
+    A test application for JQuery Mobile riding on Rails. 
+  </div>
+</div>
+
+ <div data-role="page" id="settings"  data-theme="b" >
+    <div data-role="header" data-position="fixed" data-add-back-btn="true"> 
+      <h1> Settings</h1> 
+    </div> 
+    
+   <div data-role="content" data-theme="a">
+    Settings go here
+   </div>
+</div>
 
