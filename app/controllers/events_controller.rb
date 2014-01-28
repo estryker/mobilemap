@@ -103,7 +103,7 @@ class EventsController < ApplicationController
       if @event.save
         $stderr.puts "event save"
         $stderr.puts root_path
-        format.html { redirect_to root_path, notice: 'Event was successfully created.' }
+        format.html { render 'map/root', notice: 'Event was successfully created.' }
         # format.html { redirect_to @event, notice: 'Event was successfully created.' }
         # format.html { redirect_to root_path }
         format.json { render json: @event, status: :created, location: @event }
