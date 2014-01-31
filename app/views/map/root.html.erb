@@ -27,7 +27,7 @@
 
       </script>
     </div>
-o    
+
   </div>
 
 
@@ -36,7 +36,7 @@ o
       <div class="center-wrapper">
 	<ul> 
 	  <li>&nbsp</li>
-	  <li>&nbsp</li>
+	  <li><%= link_to "New", '#new', {'data-role' => "button", 'data-icon' => "plus", "data-rel" => "dialog", "data-transition" => "pop"} %>  </li>
 	    <li>
 	      <%= link_to "Add", new_event_path, {'data-role' => "button", 'data-icon' => "plus", "rel" => "external", "data-rel" => "dialog", "data-transition" => "pop"} %> 
 	    </li>
@@ -75,4 +75,23 @@ o
     Settings go here
    </div>
 </div>
+
+
+<div id="new" data-role="page" class="details-page" data-theme="b">
+  <div data-role="header" data-position="fixed"> 
+    <%= link_to 'MobileMap', root_path, 'data-icon' => 'back', 'data-ajax' => false %>
+    <h1>New event</h1>
+  </div> 
+   
+  <div data-role="content" id="map_form" data-theme="b" >
+    <%= form_for @event do |f| %>
+       <%= f.hidden_field :latitude %>
+       <%= f.hidden_field :longitude %>
+       <%= f.label :Text %> 
+       <%= f.text_field :text %>
+       <%= f.submit "Submit" %>
+    <% end %>
+  </div>
+</div>
+
 
