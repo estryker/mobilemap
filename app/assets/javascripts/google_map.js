@@ -223,7 +223,7 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
     reticleMarker = new google.maps.Marker({
 	position: mapLatlng,
 	map: new_map,
-	icon: '/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
+	icon: reticleImage, //'/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
 	shape: reticleShape,
 	optimized: false,
 	zIndex: 5
@@ -261,7 +261,7 @@ function setupMap2(lat, lng, mapZoom, showOverviewControl) {
 
     // 'http://mobilemap.herokuapp.com/assets/
     reticleImage = new google.maps.MarkerImage(
-	'/assets/reticle.png',            // marker image
+	'/assets/reticle_64.png',            // marker image
 	new google.maps.Size(63, 63),    // marker size
 	new google.maps.Point(0,0),      // marker origin
 	new google.maps.Point(32, 32));  // marker anchor point
@@ -273,7 +273,7 @@ function setupMap2(lat, lng, mapZoom, showOverviewControl) {
     reticleMarker = new google.maps.Marker({
 	position: mapLatlng,
 	map: map,
-	icon: '/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
+	icon: reticleImage,//'/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
 	shape: reticleShape,
 	optimized: false,
 	zIndex: 5
