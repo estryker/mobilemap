@@ -191,8 +191,9 @@ function stop_tracking()
 }
 
 var new_map;
-var reticleImage;
-var reticleMarker;
+//var reticleImage;
+var reticleMarkerMap;
+var reticleMarkerNewMap;
 function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
     var mapLatlng = new google.maps.LatLng(lat, lng);
     var myOptions = {
@@ -211,7 +212,7 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
 
     // 'http://mobilemap.herokuapp.com/assets/
     reticleImage = new google.maps.MarkerImage(
-	'/assets/reticle.png',            // marker image
+	'/assets/reticle_64.png',            // marker image
 	new google.maps.Size(63, 63),    // marker size
 	new google.maps.Point(0,0),      // marker origin
 	new google.maps.Point(32, 32));  // marker anchor point
@@ -220,7 +221,7 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
 	type: 'rect'                     // rectangle
     };
 
-    reticleMarker = new google.maps.Marker({
+    reticleMarkerNewMap = new google.maps.Marker({
 	position: mapLatlng,
 	map: new_map,
 	icon: reticleImage, //'/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
@@ -229,17 +230,17 @@ function setupNewMap(lat, lng, mapZoom, showOverviewControl) {
 	zIndex: 5
     });   
 
-    google.maps.event.addListener(new_map, 'bounds_changed', centerReticle);
+    google.maps.event.addListener(new_map, 'bounds_changed', centerReticleNewMap);
 
     // If we wanted better cohesion
     //google.maps.event.addListener(new_map, 'bounds_changed', populateCenterVariable);
 }
 
 // var newmap_center;
-function centerReticle(){
-    console.log('centering reticle');
+function centerReticleNewMap(){
+    console.log('centering reticle new map');
     var newmap_center = new_map.getCenter();
-    reticleMarker.setPosition(newmap_center);
+    reticleMarkerNewMap.setPosition(newmap_center);
     document.getElementById("event_latitude").value = newmap_center.lat();
     document.getElementById("event_longitude").value = newmap_center.lng();
 }
@@ -270,7 +271,7 @@ function setupMap2(lat, lng, mapZoom, showOverviewControl) {
 	type: 'rect'                     // rectangle
     };
 
-    reticleMarker = new google.maps.Marker({
+    reticleMarkerMap = new google.maps.Marker({
 	position: mapLatlng,
 	map: map,
 	icon: reticleImage,//'/assets/reticle_64.png' ,//reticleImage, //'/assets/green_marker_32.png',//
@@ -289,7 +290,7 @@ function setupMap2(lat, lng, mapZoom, showOverviewControl) {
 function centerReticleMap(){
     console.log('centering reticle');
     var map_center = map.getCenter();
-    reticleMarker.setPosition(map_center);
+    reticleMarkerMap.setPosition(map_center);
     document.getElementById("event_latitude").value = map_center.lat();
     document.getElementById("event_longitude").value = map_center.lng();
     //document.getElementById("latitude").value = map_center.lat();
