@@ -7,19 +7,16 @@
     <div id="map_canvas" style="height : 50%"> 
       <script type="text/javascript">
         // Initialize the map when the jQuery Mobile pageshow event is triggered 
-        $('.details-page').on("pageshow", function() {
-          if (map == null || user_coordinates == null) {
-            // geolocation_success_add_markers will put the markers on the page
-	    //navigator.geolocation.getCurrentPosition(geolocation_success_add_markers, geolocation_error, geolocation_options);
-	   // If this is the entry point, find the user's location but don't get the markers
-	   navigator.geolocation.getCurrentPosition(geolocation_success_newmap, geolocation_error, geolocation_options);
+	 $('.details-page').on("pageshow", function() {
+	 
+	 <% if @event.latitude.nil? or @event.longitude.nil? %>
+	 navigator.geolocation.getCurrentPosition(geolocation_success_newmap, geolocation_error, geolocation_options);
+	 <% else %>
+	 setupNewMap(<%= @event.latitude %>, <%= @event.longitude %>, 13,true);
+	 <% end %>
 	
-          }else {
-	   // use the previous map center to set up a new map
-           center = map.getCenter();
-           setupNewMap(center.latitude, center.longitude, 13,true);
-          }
-        }); 
+	 }); 
+
       </script>
     </div>
    

@@ -82,6 +82,12 @@ class EventsController < ApplicationController
     # center of the page as the lat/long of the event
 
     @event = Event.new
+    if params.has_key? :latitude
+      @event.latitude = params[:latitude]
+    end
+    if params.has_key? :longitude
+      @event.longitude = params[:longitude]
+    end
 
     respond_to do |format|
       format.html # new.html.erb

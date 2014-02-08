@@ -286,13 +286,28 @@ function setupMap2(lat, lng, mapZoom, showOverviewControl) {
     //google.maps.event.addListener(new_map, 'bounds_changed', populateCenterVariable);
 }
 
-
+var loc_appended = false;
 function centerReticleMap(){
     console.log('centering reticle');
     var map_center = map.getCenter();
     reticleMarkerMap.setPosition(map_center);
-    document.getElementById("event_latitude").value = map_center.lat();
-    document.getElementById("event_longitude").value = map_center.lng();
+    var lat =  map_center.lat();
+    var lng = map_center.lng();
+    document.getElementById("event_latitude").value = lat;
+    document.getElementById("event_longitude").value = lng;
+
+    latlng = '?' + 'latitude='+lat+'&longitude='+lng;
+    if(loc_appended) {
+	// replace the latitude / longitude
+	h = document.getElementById("add-marker-button").href
+	parm_start = h.indexOf('?');
+	console.log('slice: ' + h.slice(0,parm_start));
+	document.getElementById("add-marker-button").href = h.slice(0,parm_start)
+    } 
+    document.getElementById("add-marker-button").href += latlng
+    loc_appended = true;
+    
+    console.log('href: ' + document.getElementById("add-marker-button").href);
     //document.getElementById("latitude").value = map_center.lat();
     //document.getElementById("longitude").value = map_center.lng();
 }
